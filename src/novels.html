@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <title>Novel Haven</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .hero {
+            text-align: center;
+            padding: 50px;
+            background: url('books.jpg') no-repeat center center/cover;
+        }
+        .hero h1 {
+            font-size: 3rem;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .book-card {
+            background: #1e1e1e;
+            border-radius: 10px;
+            margin: 15px;
+            padding: 15px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s;
+        }
+        .book-card:hover {
+            transform: scale(1.05);
+        }
+        .book-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .genre-section {
+            text-align: center;
+            margin: 30px;
+        }
+    </style>
+</head>
+<body> 
+    <header class="hero">
+        <h1>Novel Haven</h1>
+    </header>
+    
+    <section class="genre-section">
+        <h2>Explore Novels</h2>
+        <div class="container">
+            <div class="book-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJMYYa5uZp3TDBwviEqSlYiHXO-H4iVitR7Q&s" alt="Mystery Book">
+            </div>
+            <div class="book-card">
+                <img src="https://m.media-amazon.com/images/I/91ocU8970hL._AC_UF1000,1000_QL80_.jpg" alt="Sci-Fi Book">
+            </div>
+            <div class="book-card">
+                <img src="https://m.media-amazon.com/images/I/81mCE+uclxL._UF1000,1000_QL80_.jpg" alt="Romance Book">
+            </div>
+            <div class="book-card">
+                <img src="https://m.media-amazon.com/images/I/817tHNcyAgL.jpg" alt="Romance Book">
+            </div>
+            <div class="book-card">
+                <img src="https://m.media-amazon.com/images/I/81GgpMj8ImL._AC_UF1000,1000_QL80_.jpg" alt="Romance Book">
+            </div>
+            <div class="book-card">
+                <img src="https://cdn.britannica.com/21/182021-050-666DB6B1/book-cover-To-Kill-a-Mockingbird-many-1961.jpg" alt="Romance Book">
+            </div>
+            <div class="book-card">
+                <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1668782119i/40097951.jpg" alt="Romance Book">
+            </div>
+            <div class="book-card">
+                <img src="https://m.media-amazon.com/images/I/813HjdVYCrL.jpg" alt="Romance Book">
+            </div>
+            <div class="book-card">
+                <img src="https://m.media-amazon.com/images/I/91IMwiZCOHL.jpg" alt="Romance Book">   
+            </div>
+            <div class="book-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwBFkPsP2P7kwsax5LV2sCtVQB8wWIb1I7w&s" alt="Romance Book">
+            </div>
+        </div>
+    </section>
+</body>
+</html>

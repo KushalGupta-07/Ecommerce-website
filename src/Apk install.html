@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Download Page</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: linear-gradient(rgba(34, 34, 34, 0.7), rgba(0, 0, 0, 0.7)), url('');
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        /*  */
+        @import url('https://fonts.googleapis.com/css?family=Space%20Grotesk:700|Space%20Grotesk:400');
+
+        :root {
+        --m: 4rem;
+        --red: #FF6565;
+        --pink: #FF64F9;
+        --purple: #6B5FFF;
+        --blue: #4D8AFF;
+        --green: #5BFF89;
+        --yellow: #FFEE55;
+        --orange: #FF6D1B;
+        
+        }
+        body {
+        background-color: #141516;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        }
+
+        button {
+        border: calc(0.08 * var(--m)) solid transparent;
+        position: relative;
+        color: #F3F3F3;
+        font-family: 'mv boli';
+        font-size: 16px;
+        border-radius: calc(0.7 * var(--m));
+        padding: 10px 187px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+        
+        background:linear-gradient(#121213, #121213), linear-gradient(#121213 50%, rgba(18, 18, 19, 0.6) 80%, rgba(18, 18, 19, 0)),  linear-gradient(90deg, var(--orange), var(--yellow), var(--green), var(--blue), var(--purple), var(--pink), var(--red));
+        background-origin: border-box;
+        background-clip: padding-box, border-box, border-box;
+        background-size: 200%;
+        animation: animate 2s infinite linear;
+        }
+
+        button::before {
+        content: '';
+        background: linear-gradient(90deg, var(--orange), var(--yellow), var(--green), var(--blue), var(--purple), var(--pink), var(--red));
+        height: 30%;
+        width: 60%;
+        position: absolute;
+        bottom: -20%;
+        z-index: -5;
+        background-size: 200%;
+        animation: animate 2s infinite linear;
+        filter: blur(calc(0.8 * var(--m)));
+        }
+
+        button:hover, button:hover::before {
+        animation: animate 0.5s infinite linear;
+        }
+
+        @keyframes animate {
+        0% {background-position: 0}
+        100% {background-position: 200%}
+        }
+
+        /* Mobile View Adjustments */
+    @media screen and (max-width: 500px) {
+        .container {
+            padding: 20px;
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+        }
+
+        .app-icon svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        h1 {
+            font-size: 18px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        button {
+            font-size: 14px;
+            padding: 10px 150px;;
+        }
+
+        .progress-bar {
+            height: 8px;
+        }
+
+        .progress-text {
+            font-size: 12px;
+        }
+    }
+/*  */
+        .container {
+            background-color: rgb(0, 0, 0);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            background-color: #dfdada;
+            border-radius: 360px;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .app-icon svg {
+            width: 60px;
+            height: 60px;
+            fill: rgb(56, 159, 54);
+        }
+        
+        h1 {
+            color: #adacac;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            color: #7e7e7e;
+            margin-bottom: 30px;
+        }
+        
+        /* .download-btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        } */
+        
+        .download-btn:hover {
+            background-color: #3367d6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(66, 133, 244, 0.3);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        .progress-container {
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #4285f4;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        
+        .progress-text {
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="app-icon">
+            <!-- <img src="img/logo.png" alt="logo"> -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24c-2.86-1.21-6.08-1.21-8.94 0L5.65 5.67c-.19-.29-.58-.38-.87-.2-.28.16-.37.53-.22.83L6.4 9.48C3.3 11.25 1.28 14.44 1 18h22c-.28-3.56-2.3-6.75-5.4-8.52zM7 15.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm10 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z"/>
+            </svg>
+        </div>
+        <h1>Online Xerox Shopping App</h1>
+        <p>Click the Button Below to Download the Latest Version of our Application</p>
+        <button id="downloadBtn" class="download-btn">Download APK</button>
+        
+        <div id="progressContainer" class="progress-container">
+            <div class="progress-bar">
+                <div id="progressBar" class="progress"></div>
+            </div>
+            <div id="progressText" class="progress-text">0%</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            // Show progress container
+            const progressContainer = document.getElementById('progressContainer');
+            progressContainer.style.display = 'block';
+            
+            // Disable download button during "download"
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.disabled = true;
+            downloadBtn.innerHTML = 'Downloading...';
+            
+            // Simulate download progress
+            let progress = 0;
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            const interval = setInterval(function() {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    setTimeout(function() {
+                        const link = document.createElement('a');
+                        link.href = 'Xeroxify.apk';
+                        link.download = 'Xeroxify.apk';
+                        link.click();
+                        
+                        setTimeout(function() {
+                            downloadBtn.disabled = false;
+                            downloadBtn.innerHTML = 'Download APK';
+                            progressContainer.style.display = 'none';
+                            progressBar.style.width = '0%';
+                            progressText.innerHTML = '0%';
+                        }, 1000);
+                    }, 500);
+                }
+                
+                progressBar.style.width = progress + '%';
+                progressText.innerHTML = Math.round(progress) + '%';
+            }, 200);
+        });
+    </script>
+</body>
+</html>

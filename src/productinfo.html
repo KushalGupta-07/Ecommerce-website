@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Information</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .container {
+            max-width: 350px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .product-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .product-title {
+            font-size: 2rem;
+            margin: 20px 0;
+        }
+        .product-price {
+            font-size: 1.5rem;
+            color: #ff7b9c;
+            margin-bottom: 20px;
+        }
+        .product-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #b3b3b3;
+        }
+        .product-details {
+            margin-top: 20px;
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #d3d3d3;
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .add-to-cart-btn, .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #9f025e, #f9c929);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .add-to-cart-btn:hover, .back-btn:hover {
+            background: linear-gradient(135deg, #a9f99e, #46add5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="productImage" class="product-img" alt="Product Image">
+        <h1 id="productTitle" class="product-title"></h1>
+        <div id="productPrice" class="product-price"></div>
+        <p id="productDescription" class="product-description"></p>
+        <div id="productDetails" class="product-details"></div>
+        <button id="addToCartBtn" class="add-to-cart-btn">Add to Cart</button>
+        <a href="web.html" class="back-btn">Back to Products</a>
+    </div>
+
+    <script>
+        // Define the products array (copied from web.html)
+        const products = [
+            {
+                id: 1,
+                title: "Python Manual",
+                price: 69.99,
+                image: "https://imgv2-1-f.scribdassets.com/img/document/508057053/298x396/b2a0855967/1731128186?v=1",
+                rating: 4.5,
+                category: "Black & White Print",
+                details: "This manual covers Python programming basics, advanced concepts, and practical examples. Ideal for beginners and professionals."
+            },
+            {
+                id: 2,
+                title: "MAD Manual",
+                price: 99.99,
+                image: "https://imgv2-2-f.scribdassets.com/img/document/573273303/149x198/dcaeda66fd/1740485035?v=1",
+                rating: 5,
+                category: "Black & White Print",
+                details: "A comprehensive guide to Mobile Application Development, including Android and iOS platforms."
+            },
+            {
+                id: 3,
+                title: "1st sem Manual set K scheme",
+                price: 169.99,
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVcyHsg00BWujeupcTdv2uymBMZ3yEYVjd0w&s",
+                rating: 4,
+                category: "Color Print",
+                details: "A complete set of manuals for the 1st semester K scheme curriculum."
+            },
+            {
+                id: 4,
+                title: "2nd sem Manual set",
+                price: 349.99,    
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7Q7WLkSdZ3H71z24cKsGQp1XTRMl9qjYqFw&s",
+                rating: 4.8,
+                category: "Color Print",
+                details: "A complete set of manuals for the 2nd semester curriculum."
+            },
+            {
+                id: 5,
+                title: "3rd sem Manual set",
+                price: 499.99,
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzLo-50uTbIFNzB86x7ji-ZSbxw4smdCvPJA&s",
+                rating: 4.7,
+                category: "Sprial Print",
+                details: "A complete set of manuals for the 3rd semester curriculum."
+            },
+            {
+                id: 6,
+                title: "Java Programming for Beginners",
+                price: 199.99,
+                image: "https://m.media-amazon.com/images/I/6189QXnJKpL._SY342_.jpg",
+                rating: 4.3,
+                category: "Books",
+                details: "An introductory book for Java programming, covering basic to intermediate concepts."
+            },
+            {
+                id: 7,
+                title: "C++ Programming for Beginners",
+                price: 159.99,
+                image: "https://m.media-amazon.com/images/I/61T4DIm0c5L._AC_UF1000,1000_QL80_.jpg",
+                rating: 4.2,
+                category: "Books",
+                details: "A beginner-friendly guide to C++ programming, with examples and exercises."
+            },
+            {
+                id: 8,
+                title: "JavaScript: The Good Parts",
+                price: 269.99,
+                image: "https://m.media-amazon.com/images/I/81DOrRL5FLL._UF1000,1000_QL80_.jpg",
+                rating: 4.6,
+                category: "Books",
+                details: "A deep dive into the best features of JavaScript, written by Douglas Crockford."
+            },
+            {
+                id: 9,
+                title: "Computer Programming in C for Beginners",
+                price: 139.99,
+                image: "https://media.springernature.com/w158/springer-static/cover-hires/book/978-3-030-50750-3?as=webp",
+                rating: 3.6,
+                category: "Books",
+                details: "An introductory book for C programming, ideal for beginners."
+            },
+            {
+                id: 10,
+                title: "Advanced JAVA Programming",
+                price: 349.99,
+                image: "https://techknowledgebooks.com/wp-content/uploads/2024/01/Advanced-JAVA-Programming-PE149A-scaled.jpg",
+                rating: 4.5,
+                category: "Books",
+                details: "An advanced guide to Java programming, covering complex topics and best practices."
+            },
+            {
+                id: 11,
+                title: "Getting Started with Python",
+                price: 299.99,
+                image: "https://s3-eu-west-1.amazonaws.com/cover2.galileo-press.de/print/9781493225866_800_2d.png",
+                rating: 3.9,
+                category: "Books",
+                details: "A beginner's guide to Python programming, with practical examples and exercises."
+            },
+            {
+                id: 12,
+                title: "The Ruby Programming Language",
+                price: 239.99,
+                image: "https://m.media-amazon.com/images/I/71qU17bRUyL._SY342_.jpg",
+                rating: 4.7,
+                category: "Books",
+                details: "A comprehensive guide to Ruby programming, written by Yukihiro Matsumoto."
+            },
+            {
+                id: 13,
+                title: "MAD technical publication",
+                price: 199.99,
+                image: "https://imgv2-1-f.scribdassets.com/img/document/560508904/original/87d859b318/1?v=1",
+                rating: 4.7,
+                category: "Books",
+                details: "A technical publication on Mobile Application Development."
+            },
+            {
+                id: 14,
+                title: "Python technical publication",
+                price: 199.99,
+                image: "https://www.shopmarg.com/assets/uploads/products/Problem_Solving_And_Python_Programming_For_Anna_University_R_17_(Technical_Publications)_7790.jpg",
+                rating: 4.7,
+                category: "Books",
+                details: "A technical publication on Python programming."
+            },
+            {
+                id: 15,
+                title: "NIS technical publication",
+                price: 199.99,
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlppQl5I2DBJAh9p4xKwMnclrBEoCLXIXQgA&s",
+                rating: 4.7,
+                category: "Books",
+                details: "A technical publication on Network Information and Security."
+            },
+            // ...other products
+        ];
+
+        // Retrieve the selected product ID from localStorage
+        const selectedProductId = parseInt(localStorage.getItem('selectedProductId'));
+
+        // Find the product details
+        const product = products.find(p => p.id === selectedProductId);
+
+        // Populate the product information
+        if (product) {
+            document.getElementById('productImage').src = product.image;
+            document.getElementById('productTitle').textContent = product.title;
+            document.getElementById('productPrice').textContent = `₹${product.price.toFixed(2)}`;
+            document.getElementById('productDescription').textContent = `Category: ${product.category}. Rating: ${product.rating}`;
+            document.getElementById('productDetails').textContent = product.details;
+        } else {
+            document.querySelector('.container').innerHTML = '<p>Product not found.</p>';
+        }
+
+        // Add to Cart functionality
+        const addToCartBtn = document.getElementById('addToCartBtn');
+        addToCartBtn.addEventListener('click', () => {
+            let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const existingProductIndex = cart.findIndex(item => item.id === product.id);
+
+            if (existingProductIndex !== -1) {
+                cart[existingProductIndex].quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            localStorage.setItem('cartItems', JSON.stringify(cart));
+            alert(`${product.title} has been added to your cart!`);
+        });
+    </script>
+</body>
+</html>

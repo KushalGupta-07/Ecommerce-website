@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+  <title>ComicVerse</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f9a8d4, #fef08a, #bae6fd);
+      background-attachment: fixed;
+      background-size: cover;
+      color: #111;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      margin-left: 20px;
+      color: #111;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #dc2626;
+    }
+
+    .hero {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      text-shadow: 1px 1px white;
+    }
+
+    .hero button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      background: #dc2626;
+      color: white;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .hero button:hover {
+      background: #facc15;
+      color: black;
+    }
+
+    section {
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(6px);
+    }
+
+    .genres, .top-rated, .new-releases {
+      display: grid;
+      gap: 20px;
+    }
+
+    .genres {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .genre-card {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 12px;
+      transition: background 0.3s;
+      color: #111;
+    }
+
+    .genre-card:hover {
+      background: #facc15;
+    }
+
+    .comic-card {
+      background: rgba(255, 255, 255, 0.9);
+      color: #111;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .comic-card img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+
+    .comic-card-content {
+      padding: 15px;
+    }
+
+    .footer {
+      background: rgba(255, 255, 255, 0.2);
+      color: #111;
+      text-align: center;
+      padding: 20px;
+      backdrop-filter: blur(5px);
+    }
+
+    .footer a {
+      margin: 0 10px;
+      color: #111;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #dc2626;
+    }
+
+    .modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-content {
+  background: white;
+  color: black;
+  padding: 25px;
+  border-radius: 12px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  transform: scale(0.8);
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal.show .modal-content {
+  transform: scale(1);
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 20px;
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.close:hover {
+  color: red;
+}
+
+.modal button {
+  margin-top: 15px;
+  padding: 12px 25px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.modal button:hover {
+  background: #facc15;
+  color: black;
+}
+
+.modal a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.modal button:hover a {
+  color: black;
+}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h2>ComicVerse</h2>
+    <nav>
+      <a href="web.html">Home</a>
+      <a href="aboutus2.html">About</a>
+      <a href="aboutus2.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Discover Your Next Favorite Comic</h1>
+  </section>
+
+  <section class="comics-section">
+    <h1 style="text-align:center;">Comics</h1>
+    <div class="top-rated">
+      <div class="comic-card" onclick="openModal('Berserk', 'A. Star', 4.8)">
+        <img src="https://4kwallpapers.com/images/wallpapers/guts-5k-berserk-3840x2160-13631.jpg" />
+        <div class="comic-card-content">
+          <h1>Berserk</h1>
+          <p>Rating: 4.8</p>
+        </div>
+      </div>
+
+      <div class="comic-card" onclick="openModal('One Piece', 'L. Moon', 4.5)">
+        <img src="https://images5.alphacoders.com/104/1046568.jpg" />
+        <div class="comic-card-content">
+          <h1>One Piece</h1>
+          <p>Rating: 4.5</p>
+        </div>
+      </div>
+
+      <div class="comic-card" onclick="openModal('Jujutsu Kaisen', 'D. Dark', 4.7)">
+        <img src="https://images.wallpapersden.com/image/download/jujutsu-kaisen-shibuya-incident-arc-art_bmZubm6UmZqaraWkpJRnZWdurWZlbWU.jpg" />
+        <div class="comic-card-content">
+          <h1>Jujutsu Kaisen</h1>
+          <p>Rating: 4.7</p>
+        </div>
+      </div>
+    </div><br>
+
+    <div class="top-rated">
+      <div class="comic-card"onclick="openModal('Solo Leveling', 'D. Dark', 4.7)">
+        <img src="https://motionbgs.com/media/2770/shadows-army-solo-leveling.jpg" />
+        <div class="comic-card-content">
+          <h1>Solo Leveling</h1>
+          <p>Rating: 4.8</p>
+        </div>
+      </div>
+      <div class="comic-card"onclick="openModal('Dragon Ball', 'D. Dark', 4.7)">
+        <img src="https://images3.alphacoders.com/772/772383.png" />
+        <div class="comic-card-content">
+          <h1>Dragon Ball</h1>
+          <p>Rating: 4.5</p>
+        </div>
+      </div>
+      <div class="comic-card"onclick="openModal('Bleach', 'D. Dark', 4.7)">>
+        <img src="https://rare-gallery.com/mocahbig/393059-bleach-2021-manga-ichigo-4k-pc-wallpaper.jpg" />
+        <div class="comic-card-content">
+          <h1>Bleach</h1>
+          <p>Rating: 4.7</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="comicModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3 id="modalTitle"></h3>
+      <p><strong>Author:</strong> <span id="modalAuthor"></span></p>
+      <p><strong>Rating:</strong> <span id="modalRating"></span></p>
+      <p>Seek into the world of the comics.</p>
+      <button style="margin-top: 10px;">
+        <a href="https://mangapill.com/" style="text-decoration: none; color: white;">Read More</a>
+      </button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Follow us on social media</p>
+    <div>
+      <a href="https://www.Twitter.com/">Twitter</a>
+      <a href="https://www.instagram.com/">Instagram</a>
+      <a href="https://www.Facebook.com/">Facebook</a>
+    </div>
+  </footer>
+
+  <script>
+    function openModal(title, author, rating) {
+  let modal = document.getElementById("comicModal");
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("modalAuthor").textContent = author;
+  document.getElementById("modalRating").textContent = rating;
+
+  modal.style.display = "flex"; // Ensure the modal is visible
+  setTimeout(() => modal.classList.add("show"), 10); // Add animation smoothly
+}
+
+function closeModal() {
+  let modal = document.getElementById("comicModal");
+  modal.classList.remove("show");
+
+  setTimeout(() => {
+    modal.style.display = "none"; // Hide after animation completes
+  }, 300); 
+}
+
+  </script>
+
+</body>
+</html>

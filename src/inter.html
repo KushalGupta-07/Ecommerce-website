@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retail Dashboard</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --lightgray: #e9ecef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--dark);
+            color: white;
+            padding: 1.5rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            margin-left: 0.5rem;
+        }
+
+        .sidebar-menu {
+            margin-top: 2rem;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-item.active {
+            background-color: var(--primary);
+        }
+
+        .menu-item i {
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 1.5rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            padding: 0.5rem;
+            width: 250px;
+            font-size: 0.9rem;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+
+        /* Cards */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-value {
+            font-size: 1.75rem;
+            font-weight: bold;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .card-trend {
+            display: flex;
+            align-items: center;
+            margin-right: 0.75rem;
+        }
+
+        .trend-up {
+            color: var(--success);
+        }
+
+        .trend-down {
+            color: var(--danger);
+        }
+
+        .card-period {
+            color: var(--gray);
+        }
+
+        /* Charts */
+        .chart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .chart-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .chart-action {
+            margin-left: 0.75rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        .chart-action:hover {
+            color: var(--primary);
+        }
+
+        /* Table */
+        .table-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .table-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .table-action {
+            margin-left: 0.75rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        .table-action:hover {
+            color: var(--primary);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            text-align: left;
+            padding: 1rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+            border-bottom: 1px solid var(--lightgray);
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--lightgray);
+        }
+
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .product-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: var(--lightgray);
+            margin-right: 0.75rem;
+        }
+
+        .product-name {
+            font-weight: 500;
+        }
+
+        .product-category {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .badge-success {
+            background-color: rgba(76, 201, 240, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(248, 150, 30, 0.1);
+            color: var(--warning);
+        }
+
+        .badge-danger {
+            background-color: rgba(247, 37, 133, 0.1);
+            color: var(--danger);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            z-index: 100;
+            padding: 0.75rem;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu-items {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .mobile-menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .mobile-menu-item i {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .mobile-menu-item.active {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+
+            .main-content {
+                padding-bottom: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-store"></i>
+                <h2>RetailPro</h2>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Add Books</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-users"></i>
+                    <span>Customers</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="profile">
+                    <div class="profile-image">JS</div>
+                    <span>Xerox</span>
+                </div>
+            </div>
+
+            <!-- Cards -->
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Total Sales</div>
+                            <div class="card-value">₹1,727</div>
+                        </div>
+                        <div class="card-icon" style="background-color: rgba(67, 97, 238, 0.1); color: var(--primary);">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>12.5%</span>
+                        </div>
+                        <div class="card-period">vs last month</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Total Orders</div>
+                            <div class="card-value">98</div>
+                        </div>
+                        <div class="card-icon" style="background-color: rgba(72, 149, 239, 0.1); color: var(--info);">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>8.2%</span>
+                        </div>
+                        <div class="card-period">vs last month</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Average Order</div>
+                            <div class="card-value">₹237</div>
+                        </div>
+                        <div class="card-icon" style="background-color: rgba(248, 150, 30, 0.1); color: var(--warning);">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>3.7%</span>
+                        </div>
+                        <div class="card-period">vs last month</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Low Stock Items</div>
+                            <div class="card-value">24</div>
+                        </div>
+                        <div class="card-icon" style="background-color: rgba(247, 37, 133, 0.1); color: var(--danger);">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-trend trend-down">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>5.2%</span>
+                        </div>
+                        <div class="card-period">vs last month</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="chart-container">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Sales Overview</div>
+                        <div class="chart-actions">
+                            <div class="chart-action">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                            <div class="chart-action">
+                                <i class="fas fa-download"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <canvas id="salesChart" style="width:850px; height: 305px;"></canvas>></canvas>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Top Categories</div>
+                        <div class="chart-actions">
+                            <div class="chart-action">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="table-title">Recent Products</div>
+                    <div class="table-actions">
+                        <div class="table-action">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <div class="table-action">
+                            <i class="fas fa-download"></i>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Sold</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image"><img src="https://imgv2-1-f.scribdassets.com/img/document/508057053/298x396/b2a0855967/1731128186?v=1" alt="book" style="width: 100%; height: auto;"></div>
+                                    <div>
+                                        <div class="product-name">Python Manual</div>
+                                        <div class="product-category">Xerox</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Black & White Print</td>
+                            <td>₹69</td>
+                            <td>10</td>
+                            <td><span class="badge badge-success">In Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image"><img src="https://imgv2-2-f.scribdassets.com/img/document/573273303/149x198/dcaeda66fd/1740485035?v=1" alt="book" style="width: 100%; height: auto;"></div>
+                                    <div>
+                                        <div class="product-name">MAD Manual</div>
+                                        <div class="product-category">Xerox</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Black & White Print</td>
+                            <td>₹99</td>
+                            <td>8</td>
+                            <td><span class="badge badge-success">In Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image"><img src="C:\Users\ingol\OneDrive\Documents\Desktop\WhatsApp Image 2025-03-24 at 15.27.24_b62472fe.jpg" alt="book" style="width: 100%; height: auto;"></div>
+                                    <div>
+                                        <div class="product-name">1st sem Manual set</div>
+                                        <div class="product-category">Xerox</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Color Print</td>
+                            <td>₹169</td>
+                            <td>7</td>
+                            <td><span class="badge badge-warning">Low Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image"><img src="C:\Users\ingol\OneDrive\Documents\Desktop\WhatsApp Image 2025-03-24 at 15.27.23_bd6fcc02.jpg" alt="book" style="width: 100%; height: auto;"></div>
+                                    <div>
+                                        <div class="product-name">2nd sem Manual set</div>
+                                        <div class="product-category">Xerox</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Color Print</td>
+                            <td>₹349</td>
+                            <td>5</td>
+                            <td><span class="badge badge-success">In Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image"><img src="C:\Users\ingol\OneDrive\Documents\Desktop\WhatsApp Image 2025-03-24 at 15.27.23_e2996bc7.jpg" alt="book" style="width: 100%; height: auto;"></div>
+                                    <div>
+                                        <div class="product-name">3rd sem Manual set</div>
+                                        <div class="product-category">Xerox</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Sprial Print</td>
+                            <td>₹499</td>
+                            <td>3</td>
+                            <td><span class="badge badge-danger">Out of Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image"><img src="C:\Users\ingol\OneDrive\Documents\Desktop\WhatsApp Image 2025-03-24 at 15.27.24_b61bd7c3.jpg" alt="book" style="width: 100%; height: auto;"></div>
+                                    <div>
+                                        <div class="product-name">4th sem Manual set</div>
+                                        <div class="product-category">Xerox</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Spiral Print</td>
+                            <td>₹169</td>
+                            <td>7</td>
+                            <td><span class="badge badge-warning">Low Stock</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-items">
+            <div class="mobile-menu-item active">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="mobile-menu-item">
+                <i class="fas fa-shopping-bag"></i>
+                <span>Products</span>
+            </div>
+            <div class="mobile-menu-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Analytics</span>
+            </div>
+            <div class="mobile-menu-item">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+
+    <script>
+        // Sales Chart
+        const salesCtx = document.getElementById('salesChart').getContext('2d');
+        const salesChart = new Chart(salesCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [75 , 125, 175, 285, 350, 400, 450, 600, 950, 1300, 1650, 1727],
+                    borderColor: '#4361ee',
+                    backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: true,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Category Chart
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        const categoryChart = new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Black & White print', 'Color Print ', 'Sprial Print', 'Laser Print', 'Others'],
+                datasets: [{
+                    data: [33, 25, 20, 15, 5],
+                    backgroundColor: [
+                        '#4361ee',
+                        '#4895ef',
+                        '#4cc9f0',
+                        '#f8961e',
+                        '#f72585'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 20
+                        }
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+
+        // Make menu items active
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                menuItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Mobile menu
+        const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
+        mobileMenuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                mobileMenuItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const tableBody = document.querySelector('.table tbody');
+
+            // Clear existing rows
+            tableBody.innerHTML = '';
+
+            // Populate table with cart items
+            cartItems.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div class="product-info">
+                            <div class="product-image">
+                                <img src="${item.image}" alt="${item.title}" style="width: 40px; height: 40px; border-radius: 8px;">
+                            </div>
+                            <div>
+                                <div class="product-name">${item.title}</div>
+                                <div class="product-category">${item.category}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${item.category}</td>
+                    <td>₹${item.price.toFixed(2)}</td>
+                    <td>${item.quantity}</td>
+                    <td><span class="badge badge-success">In Stock</span></td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // Elements to update
+            const totalSalesElement = document.querySelector('.card:nth-child(1) .card-value');
+            const totalOrdersElement = document.querySelector('.card:nth-child(2) .card-value');
+            const averageOrderElement = document.querySelector('.card:nth-child(3) .card-value');
+            const lowStockItemsElement = document.querySelector('.card:nth-child(4) .card-value');
+
+            // Calculate metrics
+            let totalSales = 0;
+            let totalOrders = 0;
+            let lowStockItems = 0;
+            const categoryCounts = {};
+
+            cartItems.forEach(item => {
+                totalSales += item.price * item.quantity;
+                totalOrders += item.quantity;
+
+                // Count low stock items (threshold: 5)
+                if (item.quantity < 5) {
+                    lowStockItems++;
+                }
+
+                // Count categories
+                if (!categoryCounts[item.category]) {
+                    categoryCounts[item.category] = 0;
+                }
+                categoryCounts[item.category] += item.quantity;
+            });
+
+            const averageOrder = totalOrders > 0 ? totalSales / totalOrders : 0;
+
+            // Update metrics in the DOM
+            totalSalesElement.textContent = `₹${totalSales.toFixed(2)}`;
+            totalOrdersElement.textContent = totalOrders;
+            averageOrderElement.textContent = `₹${averageOrder.toFixed(2)}`;
+            lowStockItemsElement.textContent = lowStockItems;
+
+            // Update Top Categories Chart
+            const categoryLabels = Object.keys(categoryCounts);
+            const categoryData = Object.values(categoryCounts);
+
+            const categoryChart = Chart.getChart('categoryChart'); // Get existing chart instance
+            if (categoryChart) {
+                categoryChart.data.labels = categoryLabels;
+                categoryChart.data.datasets[0].data = categoryData;
+                categoryChart.update();
+            } else {
+                const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+                new Chart(categoryCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: categoryLabels,
+                        datasets: [{
+                            data: categoryData,
+                            backgroundColor: [
+                                '#4361ee',
+                                '#4895ef',
+                                '#4cc9f0',
+                                '#f8961e',
+                                '#f72585'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 12,
+                                    padding: 20
+                                }
+                            }
+                        },
+                        cutout: '70%'
+                    }
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // Elements to update
+            const tableBody = document.querySelector('.table tbody');
+
+            // Populate table with cart items
+            cartItems.forEach(item => {
+                // Check if the item already exists in the table
+                const existingRow = Array.from(tableBody.children).find(row => 
+                    row.querySelector('.product-name')?.textContent === item.title
+                );
+
+                if (!existingRow) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <div class="product-info">
+                                <div class="product-image">
+                                    <img src="${item.image}" alt="${item.title}" style="width: 40px; height: 40px; border-radius: 8px;">
+                                </div>
+                                <div>
+                                    <div class="product-name">${item.title}</div>
+                                    <div class="product-category">${item.category}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${item.category}</td>
+                        <td>₹${item.price.toFixed(2)}</td>
+                        <td>${item.quantity}</td>
+                        <td><span class="badge badge-success">In Stock</span></td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const customerSection = document.querySelector('.sidebar-menu .menu-item:nth-child(3)'); // Customers menu item
+            const mainContent = document.querySelector('.main-content');
+
+            customerSection.addEventListener('click', function () {
+                // Clear the main content
+                mainContent.innerHTML = '<h2>Customer Orders</h2>';
+
+                // Retrieve customer orders from localStorage
+                const customerOrders = JSON.parse(localStorage.getItem('customerOrders')) || [];
+
+                if (customerOrders.length === 0) {
+                    mainContent.innerHTML += '<p>No customer orders found.</p>';
+                    return;
+                }
+
+                // Create a table to display customer orders
+                const table = document.createElement('table');
+                table.classList.add('table');
+                table.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Order Number</th>
+                            <th>Order Date</th>
+                            <th>Items</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${customerOrders.map((order, index) => `
+                            <tr data-index="${index}">
+                                <td>${order.fullName}</td>
+                                <td>${order.address}</td>
+                                <td>${order.phoneNumber}</td>
+                                <td>${order.orderNumber}</td>
+                                <td>${order.orderDate}</td>
+                                <td>
+                                    <ul>
+                                        ${order.cartItems.map(item => `
+                                            <li>${item.title} (Qty: ${item.quantity})</li>
+                                        `).join('')}
+                                    </ul>
+                                </td>
+                                <td>
+                                    <button class="delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                `;
+                mainContent.appendChild(table);
+
+                // Add event listeners to delete buttons
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const row = this.closest('tr');
+                        const index = row.getAttribute('data-index');
+
+                        // Remove the order from the array
+                        customerOrders.splice(index, 1);
+
+                        // Update localStorage
+                        localStorage.setItem('customerOrders', JSON.stringify(customerOrders));
+
+                        // Remove the row from the table
+                        row.remove();
+                    });
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const dashboardMenuItem = document.querySelector('.sidebar-menu .menu-item:nth-child(1)'); // Dashboard menu item
+
+            dashboardMenuItem.addEventListener('click', function () {
+                // Navigate to the home page
+                window.location.href = 'inter.html'; // Ensure this path is correct
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const productsMenuItem = document.querySelector('.sidebar-menu .menu-item:nth-child(2)'); // Products menu item
+            const mainContent = document.querySelector('.main-content');
+
+            productsMenuItem.addEventListener('click', function () {
+                // Clear the main content
+                mainContent.innerHTML = `
+                <h2>Add a New Book</h2>
+                <form id="add-book-form">
+                    <label for="book-name">Book Name:</label><br>
+                    <input type="text" id="book-name" placeholder="Enter book name" required><br><br>
+
+                    <label for="book-price">Price (₹):</label><br>
+                    <input type="number" id="book-price" placeholder="Enter price" required><br><br>
+
+                    <label for="book-description">Description:</label><br>
+                    <textarea id="book-description" placeholder="Enter description" required></textarea><br><br>
+
+                    <label for="book-image">Image URL:</label><br>
+                    <input type="url" id="book-image" placeholder="Enter image URL" required><br><br>
+
+                    <button type="submit">Add Book</button>
+                </form>
+
+                <style>
+                    #add-book-form {
+                        max-width: 400px;
+                        margin: 0 auto;
+                        padding: 20px;
+                        background: #f9f9f9;
+                        border-radius: 12px;
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                        font-family: 'Arial', sans-serif;
+                    }
+
+                    #add-book-form label {
+                        font-weight: 600;
+                        margin-bottom: 5px;
+                        display: block;
+                        color: #333;
+                    }
+
+                    #add-book-form input, 
+                    #add-book-form textarea {
+                        width: 100%;
+                        padding: 10px;
+                        margin-top: 5px;
+                        border: 1px solid #ccc;
+                        border-radius: 8px;
+                        box-sizing: border-box;
+                        font-size: 14px;
+                        transition: border-color 0.3s, box-shadow 0.3s;
+                    }
+
+                    #add-book-form input:focus, 
+                    #add-book-form textarea:focus {
+                        border-color: #5b9bd5;
+                        box-shadow: 0 0 8px rgba(91, 155, 213, 0.3);
+                        outline: none;
+                    }
+
+                    #add-book-form button {
+                        width: 100%;
+                        padding: 12px;
+                        background-color: #5b9bd5;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        margin-top: 10px;
+                        transition: background-color 0.3s;
+                    }
+
+                    #add-book-form button:hover {
+                        background-color: #4a8ac2;
+                    }
+                </style>
+`;
+                // Handle form submission
+                const form = document.getElementById('add-book-form');
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+
+                    // Get user input
+                    const bookName = document.getElementById('book-name').value;
+                    const bookPrice = parseFloat(document.getElementById('book-price').value).toFixed(2);
+                    const bookDescription = document.getElementById('book-description').value;
+                    const bookImage = document.getElementById('book-image').value;
+
+                    // Create a new book object
+                    const newBook = {
+                        title: bookName,
+                        price: bookPrice,
+                        description: bookDescription,
+                        image: bookImage
+                    };
+
+                    // Save the book to localStorage
+                    const books = JSON.parse(localStorage.getItem('featuredBooks')) || [];
+                    books.push(newBook);
+                    localStorage.setItem('featuredBooks', JSON.stringify(books));
+
+                    alert('Book added successfully!');
+
+                    // Optionally, clear the form
+                    form.reset();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+  <title>Storybooks | Discover Magical Worlds</title>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fef9f4;
+      color: #333;
+    }
+    header {
+  background: #ffe4e1;
+  padding: 2rem;
+  text-align: center;
+  position: relative; /* Needed to position the logo absolutely */
+}
+
+.logo {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
+  background: #ffb6c1;
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  font-weight: bold;
+}
+
+.logo-text {
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+  
+}.nav-buttons {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-btn {
+  background: #ffb6c1;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.nav-btn:hover {
+  background: #ff69b4;
+}
+
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #666;
+    }
+    .filters {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .filters a {
+      display: inline-block;
+      margin: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      background-color: #ffb6c1;
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+    .filters a:hover {
+      background-color: #ff69b4;
+    }
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    @media (max-width: 900px) {
+      .book-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 500px) {
+      .book-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .book-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .book-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    .book-card img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      object-position: center;
+    }
+    .book-card .info {
+      padding: 1rem;
+      flex-grow: 1;
+    }
+    .book-card h3 {
+      margin: 0.5rem 0;
+    }
+    .book-card p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .featured-book {
+      background: #fff0f5;
+      padding: 2rem;
+      margin: 3rem auto;
+      border-radius: 20px;
+      max-width: 1000px;
+      text-align: center;
+    }
+    .featured-book h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .random-btn {
+      display: inline-block; 
+      text-decoration: none;
+      text-align: center;
+      margin: 2rem auto;
+      padding: 1rem 2rem;
+      background: #ffb6c1;
+      color: #333;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .random-btn-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+    .random-btn:hover {
+      background: #ff69b4;
+    }
+  </style>
+
+</head>
+<body>
+
+  <header>
+    <header>
+      <div class="logo">
+        📚 <span class="logo-text">Storybooks</span>
+      </div>
+    
+      <div class="nav-buttons">
+        <a href="web.html" class="nav-btn">Home</a>
+        <a href="aboutus.html" class="nav-btn">About Us</a>
+      </div>
+    
+      <h1>Discover Magical Worlds</h1>
+      <p>Find your next adventure in our storybook collection</p>
+    </header>
+    
+  </header>
+  
+
+<div class="filters">
+  <a href="adventures.html">Adventure</a>
+  <a href="fairytales.html">Fairy Tales</a>
+  <a href="mystery.html">Mystery</a>
+  <a href="educational.html">Educational</a>
+</div>
+
+<section class="book-grid">
+  <div class="book-card">
+    <img src="https://m.media-amazon.com/images/I/71aeOzm4PCL._AC_UF1000,1000_QL80_.jpg" alt="Storybook Cover">
+    <div class="info">
+      <h3>The Great Adventure</h3>
+      <p>A thrilling journey through magical lands.</p>
+      <p>⭐⭐⭐⭐☆</p>
+    </div>
+  </div>
+
+  <div class="book-card">
+    <img src="https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781416905011/cinderella-9781416905011_hr.jpg" alt="Storybook Cover">
+    <div class="info">
+      <h3>Fairy Tale Wonders</h3>
+      <p>Classic fairy tales reimagined for all ages.</p>
+      <p>⭐⭐⭐⭐⭐</p>
+    </div>
+  </div>
+
+  <div class="book-card">
+    <img src="https://m.media-amazon.com/images/I/51071nF0pTL._AC_UF1000,1000_QL80_.jpg" alt="Storybook Cover">
+    <div class="info">
+      <h3>Mystery in the Forest</h3>
+      <p>Uncover the secrets hidden deep in the woods.</p>
+      <p>⭐⭐⭐⭐☆</p>
+    </div>
+  </div>
+
+  <div class="book-card">
+    <img src="https://marketplace.canva.com/EAFY729lDrY/1/0/1003w/canva-brown-mystery-novel-book-cover-4DDntvlI-Fc.jpg" alt="Storybook Cover">
+    <div class="info">
+      <h3>Learning with Fun</h3>
+      <p>Educational tales that make learning exciting.</p>
+      <p>⭐⭐⭐⭐⭐</p>
+    </div>
+  </div>
+</section>
+
+<section class="featured-book">
+  <h2>📖 Book of the Month</h2>
+  <p><strong>"Legends of the Lost City"</strong> - Dive into an epic story filled with ancient secrets, courage, and friendship.</p>
+</section>
+
+<div class="random-btn-wrapper">
+  <a href="https://www.wattpad.com/" class="random-btn">📚 Read a Random Story</a>
+</div>
+
+</body>
+</html>

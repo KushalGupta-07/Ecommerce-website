@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            }
+
+        .container {
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            letter-spacing: 1px;
+        }
+
+        .confirmation-box {
+            padding: 40px;
+            border-radius: 12px;
+            background-color: #ffffff;
+        }
+
+        .confirmation-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .confirmation-header h1 {
+            color: #27ae60;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .order-details {
+            margin-bottom: 40px;
+        }
+
+        .order-details h2 {
+            font-size: 1.5em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            color: #34495e;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        .item-list {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .item {
+            display: flex;
+            padding: 20px;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background-color: #f1f1f1;
+            margin-right: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #2c3e50;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 1em;
+        }
+
+        .summary {
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+            padding-top: 25px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .summary-row.total {
+            font-weight: 800;
+            font-size: 1.4em;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+            color: #27ae60;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s, transform 0.2s;
+            font-size: 1em;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            border: 1px solid #bdc3c7;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d0d7de;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .notification {
+            background-color: #e8f5e9;
+            border-left: 6px solid #27ae60;
+            padding: 20px;
+            margin: 30px 0;
+            display: none;
+            font-size: 1em;
+            border-radius: 8px;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #ddd;
+            color: #95a5a6;
+            font-size: 0.9em;
+        }
+        .shipping-address {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 30px;
+        }
+        .shipping-address h2 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            color: #333;
+            text-align: center;
+        }
+        #addressForm {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.95em;
+        }
+        .form-group input {
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus {
+            border-color: #1976d2;
+            outline: none;
+        }
+        .btn {
+            align-self: center;
+            background-color: #1976d2;
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #1565c0;
+        }
+        #savedAddress {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-left: 4px solid #2e7d32;
+            border-radius: 6px;
+            color: #333;
+        }
+    </style>    
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Book Service.</div>
+        </div>
+        
+        <div class="notification" id="emailNotification">
+            A confirmation SMS has been sent to your registered Moblie Number.
+        </div>
+        
+        <div class="confirmation-box">
+            <div class="confirmation-header">
+                <h1>Order Conformation</h1>
+                <p>Fill this Information to Conform the Order</p>
+            </div>
+            <div class="order-details">
+                <h2>Order Information</h2>
+                <div class="detail-row">
+                    <span class="detail-label">Order Number:</span>
+                    <span id="orderNumber">ORD-20250409-7842</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Order Date:</span>
+                    <span>April 25, 2025</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Payment Method:</span>
+                    <span>COD (Cash Of Delivery)</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Shipping Method:</span>
+                    <span>Standard Shipping (3-5 business days)</span>
+                </div>
+            </div>
+            
+            <div class="shipping-address">
+                <h2>Shipping Address</h2>
+                <form id="addressForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name:</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="streetAddress">Street Address:</label>
+                        <input type="text" id="streetAddress" name="streetAddress" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State:</label>
+                        <input type="text" id="state" name="state" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipCode">Zip Code:</label>
+                        <input type="text" id="zipCode" name="zipCode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Phone no</label>
+                        <input type="text" id="country" name="country" required>
+                    </div>
+                    <button type="submit" class="btn">Save Address</button>
+                </form>
+                <div id="savedAddress" style="display: none;">
+                    <p id="displayAddress"></p>
+                </div>
+            </div>
+            
+            <h2>Order Summary</h2>
+            <div class="item-list"></div>
+            
+            <div class="summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>₹229.98</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span>₹49.99</span>
+                </div>
+                <div class="summary-row">
+                    <span>Tax:</span>
+                    <span>₹19.99</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span>₹258.37</span>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="btn" id="sendConfirmationBtn">Send Confirmation SMS</button>
+                <button class="btn btn-secondary" id="downloadReceiptBtn" style="display: none;">Download Receipt</button>
+                <a href="#" class="btn btn-secondary" id="continueShoppingBtn">Continue Shopping</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>If you have any questions about your order, please contact our customer service from the about section on the home page.</p>
+            <p><a href="Aboutus.html">&copy; 2025 Xeroxify.xyz. All rights reserved.</a></p>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sendConfirmationBtn = document.getElementById('sendConfirmationBtn');
+            const emailNotification = document.getElementById('emailNotification');
+            const downloadReceiptBtn = document.getElementById('downloadReceiptBtn');
+
+            sendConfirmationBtn.addEventListener('click', function() {
+                sendConfirmationBtn.disabled = true;
+                sendConfirmationBtn.textContent = 'Sending...';
+
+                // Collect order and shipping information
+                const orderNumber = document.getElementById('orderNumber').textContent;
+                const orderDate = 'April 25, 2025'; // Replace with dynamic value if needed
+                const paymentMethod = 'COD (Cash Of Delivery)'; // Replace with dynamic value if needed
+                const shippingMethod = 'Standard Shipping (3-5 business days)'; // Replace with dynamic value if needed
+                const phoneNumber = ''; // Replace with the user's phone number
+                const shippingAddress = document.getElementById('displayAddress').innerText; // Get saved address
+
+                // Make an AJAX request to the Node.js server
+                fetch('http://localhost:3000/send-confirmation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phoneNumber: phoneNumber,
+                        orderNumber: orderNumber,
+                        orderDate: orderDate,
+                        paymentMethod: paymentMethod,
+                        shippingMethod: shippingMethod,
+                        shippingAddress: shippingAddress
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Show popup
+                        alert('Your order is successfully placed!');
+
+                        // Redirect to web.html
+                        // window.location.href = 'web.html';
+                    } else {
+                        alert('Failed to send confirmation. Please try again.');
+                        sendConfirmationBtn.disabled = false;
+                        sendConfirmationBtn.textContent = 'Send Confirmation SMS';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                    sendConfirmationBtn.disabled = false;
+                    sendConfirmationBtn.textContent = 'Send Confirmation SMS';
+                });
+
+                // Simulate sending confirmation
+                setTimeout(() => {
+                    alert('Your order is successfully placed!');
+                    sendConfirmationBtn.disabled = false;
+                    sendConfirmationBtn.textContent = 'Send Confirmation SMS';
+                    downloadReceiptBtn.style.display = 'inline-block'; // Show the "Download Receipt" button
+                }, 1000);
+
+                // Add event listener for downloading the receipt
+                downloadReceiptBtn.addEventListener('click', function () {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF();
+
+                    // Add receipt content
+                    doc.setFontSize(16);
+                    doc.text('Order Receipt', 105, 20, { align: 'center' });
+
+                    doc.setFontSize(12);
+                    doc.text(`Order Number: ${orderNumber}`, 20, 40);
+                    doc.text(`Order Date: ${orderDate}`, 20, 50);
+                    doc.text(`Payment Method: ${paymentMethod}`, 20, 60);
+                    doc.text(`Shipping Method: ${shippingMethod}`, 20, 70);
+
+                    doc.text('Shipping Address:', 20, 90);
+                    doc.text(shippingAddress, 20, 100);
+
+                    doc.text('Order Summary:', 20, 120);
+
+                    // Retrieve cart items from localStorage
+                    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                    let yPosition = 130; // Starting Y position for items
+                    let subtotal = 0;
+
+                    cartItems.forEach((item, index) => {
+                        const itemTotal = item.price * item.quantity;
+                        subtotal += itemTotal;
+
+                        doc.text(`${index + 1}. ${item.title} (Qty: ${item.quantity}) - ₹${itemTotal.toFixed(2)}`, 20, yPosition);
+                        yPosition += 10; // Move to the next line
+                    });
+
+                    const shipping = 50; // Example shipping cost
+                    const tax = 0; // Example tax
+                    const total = subtotal + shipping + tax;
+
+                    // Add totals to the PDF
+                    yPosition += 10; // Add some space before totals
+                    doc.text(`Subtotal: ₹${subtotal.toFixed(2)}`, 20, yPosition);
+                    yPosition += 10;
+                    doc.text(`Shipping: ₹${shipping.toFixed(2)}`, 20, yPosition);
+                    yPosition += 10;
+                    doc.text(`Tax: ₹${tax.toFixed(2)}`, 20, yPosition);
+                    yPosition += 10;
+                    doc.text(`Total: ₹${total.toFixed(2)}`, 20, yPosition);
+
+                    // Save the PDF
+                    doc.save(`Order_Receipt_${orderNumber}.pdf`);
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const itemList = document.querySelector('.item-list');
+            const summarySubtotal = document.querySelector('.summary-row:nth-child(1) span:last-child');
+            const summaryTotal = document.querySelector('.summary-row.total span:last-child');
+
+            // Retrieve cart data from localStorage
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            if (cartItems.length === 0) {
+                itemList.innerHTML = '<p>Your cart is empty.</p>';
+                summarySubtotal.textContent = '₹0.00';
+                summaryTotal.textContent = '₹0.00';
+                return;
+            }
+
+            let subtotal = 0;
+
+            // Populate the cart items
+            cartItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('item');
+
+                itemElement.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.title}">
+                    </div>
+                    <div class="item-details">
+                        <div class="item-name">${item.title}</div>
+                        <div class="item-qty">Qty: ${item.quantity}</div>
+                    </div>
+                    <div class="item-price">₹${(item.price * item.quantity).toFixed(2)}</div>
+                    <button class="btn btn-secondary remove-btn" data-index="${index}">Remove</button>
+                `;
+
+                itemList.appendChild(itemElement);
+
+                subtotal += item.price * item.quantity;
+            });
+
+            // Update the summary
+            summarySubtotal.textContent = `₹${subtotal.toFixed(2)}`;
+            const shipping = 50; // Example shipping cost
+            const total = subtotal + shipping;
+            summaryTotal.textContent = `₹${total.toFixed(2)}`;
+
+            // Add event listeners to "Remove" buttons
+            const removeButtons = document.querySelectorAll('.remove-btn');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const index = parseInt(this.getAttribute('data-index'), 10);
+                    cartItems.splice(index, 1); // Remove the item from the array
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update localStorage
+                    location.reload(); // Reload the page to update the cart
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const addressForm = document.getElementById('addressForm');
+            const savedAddress = document.getElementById('savedAddress');
+            const displayAddress = document.getElementById('displayAddress');
+
+            addressForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                // Get form values
+                const fullName = document.getElementById('fullName').value;
+                const streetAddress = document.getElementById('streetAddress').value;
+                const city = document.getElementById('city').value;
+                const state = document.getElementById('state').value;
+                const zipCode = document.getElementById('zipCode').value;
+                const country = document.getElementById('country').value;
+
+                // Display the entered address
+                displayAddress.innerHTML = `
+                    ${fullName}<br>
+                    ${streetAddress}<br>
+                    ${city}, ${state} ${zipCode}<br>
+                    ${country}
+                `;
+
+                // Show the saved address and hide the form
+                savedAddress.style.display = 'block';
+                addressForm.style.display = 'none';
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const continueShoppingBtn = document.getElementById('continueShoppingBtn');
+
+            continueShoppingBtn.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent default anchor behavior
+                window.location.href = 'web.html'; // Redirect to web.html
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const sendConfirmationBtn = document.getElementById('sendConfirmationBtn');
+
+            sendConfirmationBtn.addEventListener('click', function () {
+                // Generate a unique order number
+                const generateOrderNumber = () => {
+                    const timestamp = Date.now(); // Current timestamp
+                    const randomNum = Math.floor(Math.random() * 1000); // Random 3-digit number
+                    return `ORD-${timestamp}-${randomNum}`;
+                };
+
+                const orderNumber = generateOrderNumber(); // Generate the order number
+
+                // Get the current date in a readable format
+                const orderDate = new Date().toLocaleDateString(); // Example: "4/11/2025"
+
+                const paymentMethod = 'COD (Cash Of Delivery)';
+                const shippingMethod = 'Standard Shipping (3-5 business days)';
+
+                // Collect user details
+                const fullName = document.getElementById('fullName').value;
+                const streetAddress = document.getElementById('streetAddress').value;
+                const city = document.getElementById('city').value;
+                const state = document.getElementById('state').value;
+                const zipCode = document.getElementById('zipCode').value;
+                const phoneNumber = document.getElementById('country').value;
+
+                // Retrieve cart items from localStorage
+                const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+                // Create an object to store all details
+                const orderDetails = {
+                    fullName,
+                    address: `${streetAddress}, ${city}, ${state}, ${zipCode}`,
+                    phoneNumber,
+                    orderNumber,
+                    orderDate,
+                    paymentMethod,
+                    shippingMethod,
+                    cartItems
+                };
+
+                // Save the order details to localStorage
+                let customerOrders = JSON.parse(localStorage.getItem('customerOrders')) || [];
+                customerOrders.push(orderDetails);
+                localStorage.setItem('customerOrders', JSON.stringify(customerOrders));
+
+                // Update the "Order Information" section
+                document.getElementById('.orderNumber').textContent = orderNumber;
+                document.querySelector('.detail-row:nth-child(2) span:last-child').textContent = orderDate;
+
+                // Show confirmation and redirect
+                alert(`Order confirmed! Your order number is ${orderNumber} and the order date is ${orderDate}.`);
+                window.location.href = 'web.html'; // Redirect to web.html
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+  <title>Timeless Reads</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Merriweather', serif;
+      background-color: #f5f1e6;
+      color: #3e2f1c;
+    }
+
+    header {
+      background: url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c') center/cover no-repeat;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 3em;
+      padding: 1em;
+    }
+
+    nav {
+      background-color: #d2b48c;
+      display: flex;
+      justify-content: center;
+      gap: 2em;
+      padding: 1em;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #3e2f1c;
+      font-weight: bold;
+    }
+
+    .section {
+      padding: 2em;
+    }
+
+    .section h2 {
+      text-align: center;
+    }
+
+    .books {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1em;
+      justify-items: center;
+    }
+
+    @media (min-width: 1024px) {
+      .books {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .book {
+      background-color: #fffaf3;
+      border: 1px solid #dcd2c0;
+      border-radius: 8px;
+      padding: 1em;
+      width: 250px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .book:hover {
+      transform: scale(1.05);
+    }
+
+    .book img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .about {
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #d2b48c;
+      text-align: center;
+      padding: 1em;
+      margin-top: 2em;
+    }
+
+    footer a {
+      margin: 0 0.5em;
+      color: #3e2f1c;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Timeless Reads: A Journey Through History</h1>
+  </header>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="aboutus2.html">About</a>
+    <a href="aboutus2.html">Contact</a>
+  </nav>
+  <section class="section" id="collections">
+    <h2>Featured Books</h2>
+    <div class="books">
+      <a href="book1.html" class="book">
+        <img src="https://m.media-amazon.com/images/I/71NDa85qT7L._AC_UF1000,1000_QL80_.jpg" alt="Book Cover">
+        <h3>The Great Maratha</h3>
+        <p><strong>Author:</strong> Rajit Desai</p>
+        <p>The life, struggles, and legacy of Chhatrapati Shivaji Maharaj, portraying his leadership, valor, and vision in establishing the Maratha Empire.</p>
+      </a>
+      <a href="book2.html" class="book">
+        <img src="https://images.meesho.com/images/products/209193743/pe8i9_512.webp" alt="Book Cover">
+        <h3>Chhatrapati Sambhaji Maharaj</h3>
+        <p><strong>Author:</strong> Roopmait Khandekar</p>
+        <p>Sambhaji Maharaj was courageous, resilient, determined, and a visionary leader.</p>
+      </a>
+      <a href="book3.html" class="book">
+        <img src="https://m.media-amazon.com/images/I/61lBciFuchL.jpg" alt="Book Cover">
+        <h3>Maharana Pratap</h3>
+        <p><strong>Author:</strong> Tejpal Dhama</p>
+        <p>Maharana Pratap was a fearless, patriotic, resilient, and strategic warrior.</p>
+      </a>
+      <a href="book4.html" class="book">
+        <img src="https://m.media-amazon.com/images/I/710nwqYgS7L._AC_UF1000,1000_QL80_.jpg" alt="Book Cover">
+        <h3>Prithviraj Chauhan</h3>
+        <p><strong>Author:</strong> Virendra Singh Rathore</p>
+        <p>Prithviraj Chauhan was a brave, skilled, just, and valiant king.</p>
+      </a>
+      <a href="book5.html" class="book">
+        <img src="https://m.media-amazon.com/images/I/81PYwenfesL._AC_UF894,1000_QL80_.jpg" alt="Book Cover">
+        <h3>Bhagat Singh Jail Diary</h3>
+        <p><strong>Author:</strong> Yadvinder Singh Sandhu</p>
+        <p>Bhagat Singh was a courageous, revolutionary, visionary, and patriotic freedom fighter.</p>
+      </a>
+      <a href="book6.html" class="book">
+        <img src="https://m.media-amazon.com/images/I/71grPT2xLkL._AC_UF1000,1000_QL80_.jpg" alt="Book Cover">
+        <h3>Netaji</h3>
+        <p><strong>Author:</strong> Krishna Bose</p>
+        <p>Subhash Chandra Bose was a determined, visionary, courageous, and nationalist leader.</p>
+      </a>
+      <a href="book7.html" class="book">
+        <img src="https://m.media-amazon.com/images/I/71q+WR6W0bL.jpg" alt="Book Cover">
+        <h3>Dr B.R. Ambedkar</h3>
+        <p><strong>Author:</strong> Dr B.R. Ambedkar</p>
+        <p>Dr. B.R. Ambedkar was a visionary, reformer, scholar, and leader.</p>
+      </a>
+      <a href="book8.html" class="book">
+        <img src="https://rukminim2.flixcart.com/image/850/1000/xif0q/book/c/o/d/chanakya-neeti-english-original-imah4u3ggw8aeheg.jpeg?q=90&crop=false" alt="Book Cover">
+        <h3>Chanakya Niti</h3>
+        <p><strong>Author:</strong> Vishnugupta</p>
+        <p>Chanakya was wise, strategic, diplomatic, visionary, brilliant, and politically astute.</p>
+      </a>
+    </div>
+  </section>
+  <section class="section about" id="about">
+    <h2>About</h2>
+    <p>
+      "Timeless Reads" is a curated collection of the most impactful historical books from various eras and regions. Whether you're a student, a history buff, or a curious reader, this collection brings you closer to the events, people, and cultures that shaped our world.
+    </p>
+  </section>
+  <footer id="contact">
+    <p>&copy; 2025 Timeless Reads. All rights reserved.</p>
+    <p>
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </p>
+  </footer>
+</body>
+</html>
